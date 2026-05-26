@@ -15,21 +15,15 @@ import "reflect"
 
 type NilArgumentsError struct{}
 
-func (*NilArgumentsError) Error() string {
-	return "src and dst must not be nil"
-}
+func (*NilArgumentsError) Error() string { _ = "STUB: not implemented"; return "" }
 
 type InvalidDestinationError struct{}
 
-func (*InvalidDestinationError) Error() string {
-	return "dst must be a pointer"
-}
+func (*InvalidDestinationError) Error() string { _ = "STUB: not implemented"; return "" }
 
 type DifferentArgumentTypesError struct{}
 
-func (*DifferentArgumentTypesError) Error() string {
-	return "dst and src must have the same type"
-}
+func (*DifferentArgumentTypesError) Error() string { _ = "STUB: not implemented"; return "" }
 
 // Merge sets any [zero-value](https://go.dev/ref/spec#The_zero_value) field
 // in dst with the same field's value in src.
@@ -41,98 +35,37 @@ func (*DifferentArgumentTypesError) Error() string {
 // Merge is a convenient wrapper around the more compiler-friendly MergeValue
 // and MergePtr functions.
 func Merge(dst, src any) error {
-	if dst == nil {
-		// As dst pointer is a copy; assigning src to a nil pointer is an
-		// ineffective assignment.
-		return new(NilArgumentsError)
-	}
+	_ = "STUB: not implemented"
 
-	if src == nil {
-		// Nothing to do here.
-		return new(NilArgumentsError)
-	}
-
-	dstValue := reflect.ValueOf(dst)
-	if dstValue.Kind() != reflect.Ptr {
-		return new(InvalidDestinationError)
-	}
-
-	dstValue = dstValue.Elem()
-	srcValue := reflect.ValueOf(src)
-
-	if srcValue.Kind() == reflect.Ptr {
-		srcValue = srcValue.Elem()
-	}
-
-	if dstValue.Type() != srcValue.Type() {
-		return new(DifferentArgumentTypesError)
-	}
-
-	merge(dstValue, srcValue, dstValue.Type())
-
+	// As dst pointer is a copy; assigning src to a nil pointer is an
+	// ineffective assignment.
 	return nil
 }
 
+// Nothing to do here.
+
 func MergeValue[T any](dst *T, src T) error {
-	if dst == nil {
-		// As dst pointer is a copy; assigning src to a nil pointer is an
-		// ineffective assignment.
-		return new(NilArgumentsError)
-	}
+	_ = "STUB: not implemented"
 
-	dstValue := reflect.ValueOf(dst).Elem()
-	srcValue := reflect.ValueOf(src)
-
-	merge(dstValue, srcValue, dstValue.Type())
-
+	// As dst pointer is a copy; assigning src to a nil pointer is an
+	// ineffective assignment.
 	return nil
 }
 
 func MergePtr[T any](dst, src *T) error {
-	if dst == nil {
-		// As dst pointer is a copy; assigning src to a nil pointer is an
-		// ineffective assignment.
-		return new(NilArgumentsError)
-	}
+	_ = "STUB: not implemented"
 
-	if src == nil {
-		// Nothing to do here.
-		return new(NilArgumentsError)
-	}
-
-	dstValue := reflect.ValueOf(dst).Elem()
-	srcValue := reflect.ValueOf(src).Elem()
-
-	merge(dstValue, srcValue, dstValue.Type())
-
+	// As dst pointer is a copy; assigning src to a nil pointer is an
+	// ineffective assignment.
 	return nil
 }
 
-func merge(dst, src reflect.Value, typ reflect.Type) {
-	if typ.Kind() == reflect.Struct {
-		mergeStruct(dst, src, typ)
-	}
+// Nothing to do here.
 
-	// TODO: handle maps and slices
-	// TODO: handle pointers and interfaces
-	// TODO: cover all potential empty cases (as in isEmptyValue from v1)
-	if !dst.IsZero() {
-		return
-	}
+func merge(dst, src reflect.Value, typ reflect.Type) { _ = "STUB: not implemented"; return }
 
-	dst.Set(src)
-}
+// TODO: handle maps and slices
+// TODO: handle pointers and interfaces
+// TODO: cover all potential empty cases (as in isEmptyValue from v1)
 
-func mergeStruct(dst, src reflect.Value, typ reflect.Type) {
-	for i := 0; i < typ.NumField(); i++ {
-		field := typ.Field(i)
-		dstField := dst.Field(i)
-		srcField := src.Field(i)
-
-		if !dstField.CanSet() {
-			continue
-		}
-
-		merge(dstField, srcField, field.Type)
-	}
-}
+func mergeStruct(dst, src reflect.Value, typ reflect.Type) { _ = "STUB: not implemented"; return }

@@ -35,47 +35,13 @@ type visit struct {
 
 // From src/pkg/encoding/json/encode.go.
 func isEmptyValue(v reflect.Value, shouldDereference bool) bool {
-	switch v.Kind() {
-	case reflect.Array, reflect.Map, reflect.Slice, reflect.String:
-		return v.Len() == 0
-	case reflect.Bool:
-		return !v.Bool()
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		return v.Int() == 0
-	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
-		return v.Uint() == 0
-	case reflect.Float32, reflect.Float64:
-		return v.Float() == 0
-	case reflect.Interface, reflect.Ptr:
-		if v.IsNil() {
-			return true
-		}
-		if shouldDereference {
-			return isEmptyValue(v.Elem(), shouldDereference)
-		}
-		return false
-	case reflect.Func:
-		return v.IsNil()
-	case reflect.Invalid:
-		return true
-	}
+	_ = "STUB: not implemented"
 	return false
 }
 
 func resolveValues(dst, src interface{}) (vDst, vSrc reflect.Value, err error) {
-	if dst == nil || src == nil {
-		err = ErrNilArguments
-		return
-	}
-	vDst = reflect.ValueOf(dst).Elem()
-	if vDst.Kind() != reflect.Struct && vDst.Kind() != reflect.Map && vDst.Kind() != reflect.Slice {
-		err = ErrNotSupported
-		return
-	}
-	vSrc = reflect.ValueOf(src)
-	// We check if vSrc is a pointer to dereference it.
-	if vSrc.Kind() == reflect.Ptr {
-		vSrc = vSrc.Elem()
-	}
-	return
+	_ = "STUB: not implemented"
+	return *new(reflect.Value), *new(reflect.Value), nil
 }
+
+// We check if vSrc is a pointer to dereference it.
